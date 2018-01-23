@@ -14,8 +14,8 @@ train_gen = ImageDataGenerator(
 test_val_gen = ImageDataGenerator(rescale=1./255)
 
 # Resizing for Xception Net
-train = train_gen.flow_from_directory('data/train', target_size=(299, 299), class_mode='binary')
-val = test_val_gen.flow_from_directory('data/val', target_size=(299, 299), class_mode='binary')
+train = train_gen.flow_from_directory('/data/train', target_size=(299, 299), class_mode='binary')
+val = test_val_gen.flow_from_directory('/data/val', target_size=(299, 299), class_mode='binary')
 
 # Total samples/batch_size(32) 
 train_steps = 15
