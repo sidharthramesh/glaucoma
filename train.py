@@ -15,7 +15,7 @@ conv_base.trainable = False
 model = models.Sequential()
 model.add(conv_base)
 model.add(layers.Flatten())
-model.add(layers.Dense(520, activation='relu'))
+model.add(layers.Dense(256, activation='relu'))
 model.add(layers.Dropout(0.5))
 model.add(layers.Dense(1,activation='softmax'))
 model.compile(optimizers.RMSprop(1e-5),'binary_crossentropy',metrics=['acc'])
@@ -25,7 +25,7 @@ print(model.summary())
 tensorboard = callbacks.TensorBoard('/output',1)
 
 # Train model!
-model.fit_generator(train,train_steps,20,callbacks=[tensorboard],validation_data=val,validation_steps=val_steps)
+model.fit_generator(train,train_steps,80,callbacks=[tensorboard],validation_data=val,validation_steps=val_steps)
 
 # Save to output
 model.save('/output/model_data.h5')

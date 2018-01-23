@@ -5,9 +5,6 @@ train_gen = ImageDataGenerator(
     rescale=1./255,
     horizontal_flip=True,
     rotation_range=40,
-    shear_range=0.2,
-    width_shift_range=0.2,
-    height_shift_range=0.2,
     zoom_range=0.3,)
 
 # Only rescale
