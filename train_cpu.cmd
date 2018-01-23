@@ -1,0 +1,1 @@
+floyd run --data sidharthramesh/datasets/glaucoma/2:data python train.py
