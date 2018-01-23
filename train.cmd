@@ -1,1 +1,1 @@
-floyd run --gpu --data sidharthramesh/datasets/glaucoma/2:data python train.py
+floyd run --gpu --tensorboard --data sidharthramesh/datasets/glaucoma/2:data python train.py
