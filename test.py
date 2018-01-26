@@ -24,21 +24,33 @@ print(model.summary())
 
 print("Loading pre-finetune weights...")
 model.load_weights('/model0/trained_dense.h5')
-print("Test Accuracy:{}".format(model.evaluate_generator(test, test_steps))[1])
+print("Test Accuracy:{}".format(model.evaluate_generator(test, test_steps)[1]))
 
 print("Loading pre-finetune Best Validation weights...")
 model.load_weights('/model0/best_weights.h5')
-print("Test Accuracy:{}".format(model.evaluate_generator(test, test_steps))[1])
+print("Test Accuracy:{}".format(model.evaluate_generator(test, test_steps)[1]))
+
+with open('/output/not_finetuned.json','w') as f:
+    f.write(model.to_json())
+
+conv_base.trainable = True
+for layer in conv_base.layers:
+    if layer.name != 'block14_sepconv2':
+        layer.trainable = False
+
+model.compile(optimizers.RMSprop(1e-5),'binary_crossentropy',metrics=['accuracy'])
 
 print("Loading Fine tuned weights...")
 model.load_weights('/model/fine_tuned.h5')
-print("Test Accuracy:{}".format(model.evaluate_generator(test, test_steps))[1])
+print("Test Accuracy:{}".format(model.evaluate_generator(test, test_steps)[1]))
 
 print("Loading Fine tuned Best Validation weights...")
 model.load_weights('/model/best_weights.h5')
-print("Test Accuracy:{}".format(model.evaluate_generator(test, test_steps))[1])
+print("Test Accuracy:{}".format(model.evaluate_generator(test, test_steps)[1]))
 
-model.to_json('/output/model_archetecture.json')
+print("Writing model to file...")
+with open('/output/finetuned.json','w') as f:
+    f.write(model.to_json())
 
 # Output to tensorboard
 # Train model!
