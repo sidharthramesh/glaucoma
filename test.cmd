@@ -1,0 +1,1 @@
+floyd run --cpu --data sidharthramesh/datasets/glaucoma/2:data --data sidharthramesh/projects/glaucoma/21/output:model --data sidharthramesh/projects/glaucoma/18/output:model0 python test.py

@@ -1,0 +1,1 @@
+floyd run --gpu --data sidharthramesh/datasets/glaucoma/2:data --data sidharthramesh/projects/glaucoma/18/output:model python finetune.py

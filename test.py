@@ -9,7 +9,7 @@ class_weight = {
 }
 
 # Using pretrained Xception Net as Convolutional feature extractor
-conv_base = Xception(include_top=False,weights='imagenet',input_shape=(299,299,3))
+conv_base = Xception(include_top=False,weights=None,input_shape=(299,299,3))
 conv_base.trainable = False
 
 model = models.Sequential()
@@ -19,13 +19,27 @@ model.add(layers.Dense(256, activation='relu'))
 model.add(layers.Dropout(0.5))
 model.add(layers.Dense(1,activation='sigmoid'))
 model.compile(optimizers.RMSprop(1e-5),'binary_crossentropy',metrics=['accuracy'])
-
-
 print(model.summary())
-print("Loading weights...")
+
+
+print("Loading pre-finetune weights...")
+model.load_weights('/model0/trained_dense.h5')
+print("Test Accuracy:{}".format(model.evaluate_generator(test, test_steps))[1])
+
+print("Loading pre-finetune Best Validation weights...")
+model.load_weights('/model0/best_weights.h5')
+print("Test Accuracy:{}".format(model.evaluate_generator(test, test_steps))[1])
+
+print("Loading Fine tuned weights...")
+model.load_weights('/model/fine_tuned.h5')
+print("Test Accuracy:{}".format(model.evaluate_generator(test, test_steps))[1])
+
+print("Loading Fine tuned Best Validation weights...")
 model.load_weights('/model/best_weights.h5')
-print("Evaluating on test data")
-print(model.evaluate_generator(test, test_steps))
+print("Test Accuracy:{}".format(model.evaluate_generator(test, test_steps))[1])
+
+model.to_json('/output/model_archetecture.json')
+
 # Output to tensorboard
 # Train model!
 #model.fit_generator(train,train_steps,30,callbacks=[callbacks.TensorBoard('/output',1), callbacks.ModelCheckpoint('/output/best_weights.h5', save_best_only=True, verbose=1)],validation_data=val,validation_steps=val_steps, class_weight=class_weight)
