@@ -1,3 +1,2 @@
-events.out.tfevents.1516713895.task-instance-container
-best_weights.h5
-events.out.tfevents.1516715591.task-instance-container
+events.out.tfevents.*
+*.h5
